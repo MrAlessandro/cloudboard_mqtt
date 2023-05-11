@@ -1,0 +1,26 @@
+version: '3'
+services:
+    mosquitto:
+        image: eclipse-mosquitto:2.0.15
+        container_name: mosquitto
+        volumes:
+            - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+            - ./mosquitto/dynamic-security.json:/mosquitto/config/dynamic-security.json
+            - ./mosquitto/passwd:/mosquitto/config/passwd
+            - ./mosquitto/mosquitto_data:/mosquitto/data
+            - ./mosquitto/mosquitto_log:/mosquitto/log
+            - ./mosquitto/mosquitto_plugins:/mosquitto/plugins
+            - ./mosquitto/mosquitto_plugins_config:/mosquitto/plugins
+        ports:
+            - 127.0.0.1:1883:1883
+            - 127.0.0.1:9001:9001
+        expose:
+            - 1883
+            - 9001
+        networks:
+            - mosquitto
+    
+networks:
+    mosquitto:
+        name: mosquitto
+        driver: bridge
